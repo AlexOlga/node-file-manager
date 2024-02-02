@@ -1,7 +1,7 @@
 import { homedir } from 'os';
 import { createInterface } from 'readline';
 import { defaultName, errorMessange } from './src/constants.js';
-import navigateUp from './src/navigate.js';
+import { navigateUp, changeDir, listFiles } from './src/navigate.js';
 
 
 let userName = process.argv[2].split('=')[1];
@@ -23,11 +23,19 @@ rl.prompt();
 
 rl.on('line', (data) => {
     const [command, ...args] = data.trim().split(' ');
+    console.log(args[0]);
     switch (command) {
         case 'up':
-            workingDir=navigateUp(workingDir);
+            workingDir = navigateUp(workingDir);
             console.log(`up`);
             break;
+        case 'cd':
+            workingDir = changeDir(workingDir, args[0]);
+
+            break;
+            case 'ls':
+                listFiles(workingDir);
+                break;
         default:
             console.log(`${errorMessange}`);
     }
