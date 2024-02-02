@@ -1,18 +1,42 @@
-import getUserName from './src/getUserName.js'
+import { homedir } from 'os';
+import { createInterface } from 'readline';
+import { defaultName, errorMessange } from './src/constants.js';
+import navigateUp from './src/navigate.js';
 
 
-let userName  = process.argv[2].split('=')[1];
-// Defolt user name
-if (!userName)  userName  =  'User';
-  
+let userName = process.argv[2].split('=')[1];
+if (!userName) userName = defaultName;
+
+// starting directory 
+const homeDir = homedir();
+let workingDir = homeDir;
+
 console.log(`Welcome to the File Manager, ${userName}!`);
-const readable = process.stdin;
-readable.on("data", async function (data) {
-    console.log(`тут будут команды, ${data}!`);
-})
-process.on("SIGINT", () => {
-    process.exit();
-  });
-process.on("exit", () => {
+console.log(`You are currently in ${workingDir}`);
+
+const rl = createInterface({
+    input: process.stdin,
+    output: process.stdout,
+});
+
+rl.prompt();
+
+rl.on('line', (data) => {
+    const [command, ...args] = data.trim().split(' ');
+    switch (command) {
+        case 'up':
+            workingDir=navigateUp(workingDir);
+            console.log(`up`);
+            break;
+        default:
+            console.log(`${errorMessange}`);
+    }
+    rl.prompt();
+    console.log(`You are currently in ${workingDir}`);
+});
+
+rl.on('close', () => {
     console.log(`Thank you for using File Manager, ${userName}, goodbye!`);
-  });
+    process.exit();
+});
+
