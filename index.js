@@ -2,7 +2,7 @@ import { homedir } from 'os';
 import { createInterface } from 'readline';
 import { defaultName, errorMessange } from './src/constants.js';
 import { navigateUp, changeDir, listFiles } from './src/navigate.js';
-import {readFile,  createFile} from './src/filesUtils.js'
+import { readFile, createFile, renameFile, copyFile,deleteFile, moveFile } from './src/filesUtils.js'
 
 
 let userName = process.argv[2].split('=')[1];
@@ -24,9 +24,9 @@ rl.prompt();
 
 rl.on('line', async (data) => {
     const [command, ...args] = data.trim().split(' ');
-       switch (command) {
+    switch (command) {
         case 'up':
-            workingDir = navigateUp(workingDir);            
+            workingDir = navigateUp(workingDir);
             break;
         case 'cd':
             workingDir = changeDir(workingDir, args[0]);
@@ -34,12 +34,24 @@ rl.on('line', async (data) => {
         case 'ls':
             listFiles(workingDir);
             break;
-        case 'cat':          
-        await readFile(workingDir, args[0]);
+        case 'cat':
+            await readFile(workingDir, args[0]);
             break;
-            case 'add':
-                createFile(workingDir,args[0]);
-                break;
+        case 'add':
+            createFile(workingDir, args[0]);
+            break;
+        case 'rn':
+            renameFile(workingDir, args[0], args[1]);
+            break;
+        case 'cp':
+            copyFile(workingDir, args[0], args[1]);
+            break;
+        case 'mv':
+            moveFile(workingDir, args[0], args[1]);
+            break;
+        case 'rm':
+            deleteFile(workingDir, args[0]);
+            break;
         default:
             console.log(`${errorMessange}`);
     }
