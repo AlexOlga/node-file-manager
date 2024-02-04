@@ -3,7 +3,7 @@ import os from 'os';
 export function osInfo(flag) {
     switch (flag.trim()) {
         case '--EOL':
-            console.log(`End-Of-Line character: ${os.EOL.charCodeAt(0)}`);
+            console.log(`End-Of-Line character code: ${os.EOL.charCodeAt(0)}`);
             break;
         case '--cpus':
             console.log('CPU Information:');
