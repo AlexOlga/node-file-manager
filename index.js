@@ -2,9 +2,10 @@ import { homedir } from 'os';
 import { createInterface } from 'readline';
 import { defaultName, errorMessange } from './src/constants.js';
 import { navigateUp, changeDir, listFiles } from './src/navigate.js';
-import { readFile, createFile, renameFile, copyFile,deleteFile, moveFile } from './src/filesUtils.js';
-import {osInfo} from './src/osUtils.js';
-import {calcHash} from './src/criptoUtills.js'
+import { readFile, createFile, renameFile, copyFile, deleteFile, moveFile } from './src/filesUtils.js';
+import { osInfo } from './src/osUtils.js';
+import { calcHash } from './src/criptoUtills.js';
+import {decompressFile,  compressFile} from './src/compress.js';
 
 
 let userName = process.argv[2].split('=')[1];
@@ -55,10 +56,16 @@ rl.on('line', async (data) => {
             deleteFile(workingDir, args[0]);
             break;
         case 'os':
-             osInfo(args[0]);
+            osInfo(args[0]);
             break;
         case 'hash':
             calcHash(workingDir, args[0]);
+            break;
+        case 'compress':
+            compressFile(workingDir, args[0], args[1]);
+            break;
+        case 'decompress':
+            decompressFile(workingDir,args[0], args[1]);
             break;
         default:
             console.log(`${errorMessange}`);
