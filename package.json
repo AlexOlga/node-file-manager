@@ -1,0 +1,21 @@
+{
+  "name": "node-file-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "startName": "npm run start -- --username=olga"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexOlga/node-file-manager.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexOlga/node-file-manager/issues"
+  },
+  "homepage": "https://github.com/AlexOlga/node-file-manager#readme"
+}
